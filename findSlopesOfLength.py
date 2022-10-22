@@ -1,4 +1,4 @@
-PATH_LENGTH = 17.779271
+PATH_LENGTH = 17.0666894
 SQRT2, SQRT5 = 2**(1/2), 5**(1/2)
 
 
@@ -17,9 +17,4 @@ for b in range(20):
             a = int(PATH_LENGTH - (b*SQRT2 + c*SQRT5))
             print(f'{a} + {b}√2 + {c}√5 = {PATH_LENGTH}')
 
-print("So: 2-3 straight lines, 4-5 diagonals, 3 knight move")
-print()
-print('straight lines: 3 small lines or 1 small line and 1 long line')
-print("diagonal lines: 5 small diagonals "
-      "or 4 small diagonals and 1 big diagonal")
-print('knight diagonal lines: 3 lines')
+print("So: 0 straight lines, 1 diagonals, 7 knight diagonal lines")
