@@ -26,13 +26,13 @@ def is_point_between(p1, p2):
 POINTS_AVAIDABLE_FROM_POINT = {
     p1: get_points_avaidable_from_point(p1) for p1 in P
 }
-POINTS_AVAIDABLE_FROM_POINT[(-1, 1)]
+print(POINTS_AVAIDABLE_FROM_POINT[(-1, 1)])
+
+
 # Example path
 path = [(0, 0), (-1, 1)]
 last_in_path = path[-1]
-avaidable_points = set(filter(
-    lambda point: point not in path,
-    POINTS_AVAIDABLE_FROM_POINT[last_in_path]))
+avaidable_points = POINTS_AVAIDABLE_FROM_POINT[last_in_path] - set(path)
 print(avaidable_points)
 
 
@@ -40,7 +40,8 @@ def count_path_distance(path):
     return sum([distance(p1, p2) for p1, p2 in zip(path[:-1], path[1:])])
 
 
-count_path_distance(path)
+print(count_path_distance(path))
+
 
 # Backtracking to find the longest length of path and
 # all path with the longest length
@@ -53,10 +54,8 @@ def DFS():
     global max_length
     if path:
         last_in_path = path[-1]
-        avaidable_points = set(filter(
-            lambda point: point not in path,
-            POINTS_AVAIDABLE_FROM_POINT[last_in_path]
-        ))
+        avaidable_points = (POINTS_AVAIDABLE_FROM_POINT[last_in_path]
+                            - set(path))
     else:
         avaidable_points = P.copy()
 
@@ -75,12 +74,9 @@ DFS()
 print(max_length)
 
 # filter all paths which haven't max_length
-print(f'number of the longest paths before filter: {len(the_longest_paths)}')
-the_longest_paths = list(filter(
-    lambda path: count_path_distance(path) == max_length,
-    the_longest_paths
-))
-print(f'number of the longest paths after filter: {len(the_longest_paths)}')
+the_longest_paths = [path for path in the_longest_paths
+                     if count_path_distance(path) == max_length]
+print(f'number of the longest paths: {len(the_longest_paths)}')
 
 # There is 1-2 unique answers (we don't count rotations and flip).
 # So, check some path
