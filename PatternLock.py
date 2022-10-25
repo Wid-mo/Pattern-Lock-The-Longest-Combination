@@ -1,5 +1,7 @@
 P = {(x, y) for x in [-1, 0, 1] for y in [-1, 0, 1]}
 print(P)
+
+
 # POINTS_AVAIDABLE_FROM_POINT = {
 # p1: get_points_avaidable_from_point(p1) for p1 in P}
 
@@ -31,8 +33,8 @@ print(POINTS_AVAIDABLE_FROM_POINT[(-1, 1)])
 
 # Example path
 path = [(0, 0), (-1, 1)]
-last_in_path = path[-1]
-avaidable_points = POINTS_AVAIDABLE_FROM_POINT[last_in_path] - set(path)
+avaidable_points = POINTS_AVAIDABLE_FROM_POINT[path[-1]] - set(path) if (
+                                                            path) else P.copy()
 print(avaidable_points)
 
 
@@ -52,15 +54,10 @@ path = []
 
 def DFS():
     global max_length
-    if path:
-        last_in_path = path[-1]
-        avaidable_points = (POINTS_AVAIDABLE_FROM_POINT[last_in_path]
-                            - set(path))
-    else:
-        avaidable_points = P.copy()
-
-    for choosing_point in avaidable_points:
-        path.append(choosing_point)
+    avaidable_points = POINTS_AVAIDABLE_FROM_POINT[path[-1]] - set(path) if (
+        path) else P.copy()
+    for choosed_point in avaidable_points:
+        path.append(choosed_point)
         path_length = count_path_distance(path)
         if path_length >= max_length:
             the_longest_paths.append(path.copy())
@@ -71,12 +68,12 @@ def DFS():
 
 
 DFS()
-print(max_length)
+print(f'Length of the longest path: {max_length}')
 
 # filter all paths which haven't max_length
 the_longest_paths = [path for path in the_longest_paths
                      if count_path_distance(path) == max_length]
-print(f'number of the longest paths: {len(the_longest_paths)}')
+print(f'Number of the longest paths: {len(the_longest_paths)}')
 
 # There is 1-2 unique answers (we don't count rotations and flip).
 # So, check some path
