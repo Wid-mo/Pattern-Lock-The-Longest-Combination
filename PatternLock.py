@@ -1,9 +1,29 @@
 P = {(x, y) for x in [-1, 0, 1] for y in [-1, 0, 1]}
 print(P)
 
+path = [(-1, 1), (0, 0), (-1, 0)]
+points_not_in_path = P - set(path)
 
-# POINTS_AVAIDABLE_FROM_POINT = {
-# p1: get_points_avaidable_from_point(p1) for p1 in P}
+
+def points_avaidable_from_last_in_path(path):
+    if not path:
+        return P.copy()
+
+    last_in_path = path[-1]
+    return get_points_avaidable_from_point(last_in_path)
+
+
+def get_points_avaidable_from_point(p1):
+    return {p2 for p2 in P - set(path) if not is_point_between(p1, p2)}
+
+
+def is_point_between(p1, p2):
+    return any({is_point_between_two_points(p3, p1, p2)
+                for p3 in P - set(path) if p3 != p1 if p3 != p2})
+
+
+def is_point_between_two_points(p3, p1, p2):
+    return distance(p3, p1) + distance(p3, p2) == distance(p1, p2)
 
 
 def distance(p1, p2):
@@ -11,31 +31,9 @@ def distance(p1, p2):
     return hypot(p1[0] - p2[0], p1[1] - p2[1])
 
 
-def is_point_between_two_points(p3, p1, p2):
-    return distance(p3, p1) + distance(p3, p2) == distance(p1, p2)
+print(points_avaidable_from_last_in_path(path))
 
-
-def get_points_avaidable_from_point(p1):
-    return {p2 for p2 in P if not is_point_between(p1, p2)}
-
-
-def is_point_between(p1, p2):
-    return any({is_point_between_two_points(p3, p1, p2)
-                for p3 in P if p3 != p1 if p3 != p2
-                })
-
-
-POINTS_AVAIDABLE_FROM_POINT = {
-    p1: get_points_avaidable_from_point(p1) for p1 in P
-}
-print(POINTS_AVAIDABLE_FROM_POINT[(-1, 1)])
-
-
-# Example path
-path = [(0, 0), (-1, 1)]
-avaidable_points = POINTS_AVAIDABLE_FROM_POINT[path[-1]] - set(path) if (
-                                                            path) else P.copy()
-print(avaidable_points)
+path = [(-1, 1), (0, 0)]
 
 
 def count_path_distance(path):
@@ -54,10 +52,10 @@ path = []
 
 def DFS():
     global max_length
-    avaidable_points = POINTS_AVAIDABLE_FROM_POINT[path[-1]] - set(path) if (
-        path) else P.copy()
-    for choosed_point in avaidable_points:
-        path.append(choosed_point)
+    # points_not_in_path = P - set(path)
+    avaidable_points = points_avaidable_from_last_in_path(path)
+    for choosing_point in avaidable_points:
+        path.append(choosing_point)
         path_length = count_path_distance(path)
         if path_length >= max_length:
             the_longest_paths.append(path.copy())
