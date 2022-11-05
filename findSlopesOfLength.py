@@ -1,4 +1,4 @@
-PATH_LENGTH = 17.0666894
+PATH_LENGTH = 17.779271744364845
 SQRT2, SQRT5 = 2**(1/2), 5**(1/2)
 
 
@@ -17,4 +17,4 @@ for b in range(20):
             a = int(PATH_LENGTH - (b*SQRT2 + c*SQRT5))
             print(f'{a} + {b}√2 + {c}√5 = {PATH_LENGTH}')
 
-print("So: 0 straight lines, 1 diagonals, 7 knight diagonal lines")
+print(f'So: {a} straight lines, 5 diagonals, 3 knight diagonal lines')
